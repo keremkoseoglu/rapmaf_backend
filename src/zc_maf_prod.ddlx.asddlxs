@@ -1,0 +1,73 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+  typeName: 'Production',
+  typeNamePlural: 'Productions',
+  title: {
+    type: #STANDARD,
+    label: 'Quantity',
+    value: 'MaterialDescription'
+  }
+}
+annotate entity ZC_MAF_PROD with
+{
+  @UI.facet: [
+    {
+      id: 'Production',
+      purpose: #STANDARD,
+      position: 10,
+      label: 'Quantity',
+      type: #IDENTIFICATION_REFERENCE
+    },
+    {
+      label: 'BOM',
+      id: 'Evaluation',
+      type: #COLLECTION,
+      position: 20
+    },
+    {
+      label: 'Values',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      position: 10,
+      parentId: 'Evaluation',
+      targetQualifier: 'PricesGroup'
+    },
+    {
+      label: 'Parent',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      position: 20,
+      parentId: 'Evaluation',
+      targetQualifier: 'ParentGroup'
+    }
+  ]
+
+  @UI.identification: [{ position: 10 }]
+  MafId;
+  @UI.identification: [{ position: 20 }]
+  ComponentId;
+  @UI.lineItem: [{ position: 05 }]
+  BomLevel;
+  @UI.lineItem: [{ position: 10 }]
+  @UI.fieldGroup: [{ qualifier: 'PricesGroup', position: 05 }]
+  ParentId;
+  @UI.lineItem: [{ position: 15 }]
+  @UI.fieldGroup: [{ qualifier: 'ParentGroup', position: 10 }]
+  @EndUserText.label: 'Parent material'
+  ParentMaterial;
+  @UI.lineItem: [{ position: 16 }]
+  @UI.fieldGroup: [{ qualifier: 'ParentGroup', position: 20 }]
+  @EndUserText.label: 'Parent mat.descr.'
+  ParentMaterialDescription;
+  @UI.lineItem: [{ position: 20 }]
+  @UI.fieldGroup: [{ qualifier: 'PricesGroup', position: 10 }]
+  Material;
+  @UI.lineItem: [{ position: 30 }]
+  @UI.fieldGroup: [{ qualifier: 'PricesGroup', position: 20 }]
+  MaterialDescription;
+  @UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ qualifier: 'PricesGroup', position: 30 }]
+  Quantity;
+  @UI.fieldGroup: [{ qualifier: 'PricesGroup', position: 40 }]
+  Uom;
+}

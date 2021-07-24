@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ovp/app/Component"],function(e){return e.extend("mafoverview.Component",{metadata:{manifest:"json"}})});                                                                                                                                   

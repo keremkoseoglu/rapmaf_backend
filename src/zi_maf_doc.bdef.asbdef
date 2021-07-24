@@ -1,0 +1,111 @@
+unmanaged;
+
+define behavior for ZI_MAF_DOC alias Document
+implementation in class zbp_i_maf_doc unique
+lock master
+//etag LocalLastChangedAt
+//late numbering
+//lock master
+//authorization master
+//etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+  association _cost { }
+  association _finance { }
+  association _production { create; }
+
+  field ( mandatory ) CurrencyCode, Description;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy, LocalLastChangedAt, MafId;
+
+  action ( features : instance ) approveDoc result [1] $self;
+  action ( features : instance ) rejectDoc result [1] $self;
+
+  mapping for ztmaf_doc control zsmaf_doc_ctrl {
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    CurrencyCode = waers;
+    Description = stext;
+    LastChangedAt = last_changed_at;
+    LastChangedBy = last_changed_by;
+    LocalLastChangedAt = local_last_changed_at;
+    MafId = mafid;
+    Approved = approved;
+  }
+
+  mapping for ztmaf_market control ZSMAF_MARKET_CTRL {
+    MaterialDescription = maktx;
+    Length = LENGTH;
+    Width = WIDTH;
+    Height = HEIGHT;
+    SizeUom = MEABM;
+    Volume = VOLUM;
+    VolumeUom = VOLEH;
+  }
+}
+
+define behavior for ZI_MAF_COST_CALC alias Cost
+//implementation in class zbp_i_maf_cost unique
+lock dependent( MafId = MafId )
+//late numbering
+//authorization dependent( <local_field_name> = <target_field_name> )
+//etag <field_name>
+{
+  association _doc;
+
+  field ( readonly ) ComponentId, Cost, MafId;
+
+  mapping for ztmaf_cost_calc control zsmaf_cost_ctrl {
+    ComponentId = comp_uuid;
+    Cost = wrbtr;
+    MafId = mafid;
+  }
+}
+
+define behavior for ZI_MAF_FINANCE alias Finance
+implementation in class zbp_i_maf_finance unique
+lock dependent( MafId = MafId )
+{
+  update;
+  //delete;
+  association _doc;
+
+  field (mandatory) Material, PriceUnit;
+  field (readonly) MafId;
+
+  mapping for ztmaf_finance control zsmaf_finance_ctrl {
+    MafId = mafid;
+    Material = matnr;
+    Price = wrbtr;
+    PriceUnit = peinh;
+  }
+}
+
+
+define behavior for ZI_MAT_PROD alias Production
+implementation in class zbp_i_maf_prod unique
+lock dependent( MafId = MafId )
+//late numbering
+//lock dependent( <local_field_name> = <target_field_name> )
+//authorization dependent( <local_field_name> = <target_field_name> )
+//etag <field_name>
+{
+  create;
+  update;
+  delete;
+  association _doc;
+
+  field (mandatory) MafId, Material, BomLevel;
+  field (readonly) ComponentId, ParentMaterial, ParentMaterialDescription;
+
+  mapping for ztmaf_prod control zsmaf_prod_ctrl {
+    ComponentId = comp_uuid;
+    MafId = mafid;
+    Material = matnr;
+    ParentId = parent_uuid;
+    Quantity = menge;
+    Uom = meins;
+    BomLevel = bom_level;
+  }
+}

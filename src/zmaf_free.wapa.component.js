@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/UIComponent","sap/ui/Device","maffree/model/models"],function(e,t,i){"use strict";return e.extend("maffree.Component",{metadata:{manifest:"json"},init:function(){e.prototype.init.apply(this,arguments);this.getRouter().initiali+
+ze();this.setModel(i.createDeviceModel(),"device")}})});                                                                                                                                                                                                       

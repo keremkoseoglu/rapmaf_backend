@@ -1,0 +1,149 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+  typeName: 'MAF document',
+  typeNamePlural: 'MAF documents',
+  title: {
+    type: #STANDARD,
+    value: 'Description'
+  },
+  description: {
+    type: #STANDARD,
+    value: 'MafId'
+  }
+}
+annotate entity ZC_MAF_DOC with
+{
+  @UI.facet: [
+    /* Generic */
+    {
+      purpose: #STANDARD,
+      position: 10,
+      type: #COLLECTION,
+      label: 'Generic',
+      id: 'Generic'
+    },
+    {
+      purpose: #STANDARD,
+      position: 10,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Basic',
+      parentId: 'Generic'
+    },
+    {
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      position: 20,
+      label: 'History',
+      parentId: 'Generic',
+      targetQualifier: 'History'
+    },
+    /* Marketing */
+    {
+      purpose: #STANDARD,
+      position: 20,
+      type: #COLLECTION,
+      label: 'Marketing',
+      id: 'Marketing'
+    },
+    {
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      position: 10,
+      label: 'Basic',
+      parentId: 'Marketing',
+      targetQualifier: 'Marketing'
+    },
+    {
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      position: 20,
+      label: 'Dimensions',
+      parentId: 'Marketing',
+      targetQualifier: 'Dimensions'
+    },
+    /* Production */
+    {
+      id: 'Production',
+      label: 'Production',
+      purpose: #STANDARD,
+      type: #LINEITEM_REFERENCE,
+      position: 30,
+      targetElement: '_production'
+    },
+    /* Finance */
+    {
+      id: 'Finance',
+      label: 'Finance',
+      purpose: #STANDARD,
+      type: #LINEITEM_REFERENCE,
+      position: 40,
+      targetElement: '_finance'
+    },
+    /* Cost calculation */
+    {
+      id: 'CostCalculation',
+      label: 'Cost Calculation',
+      purpose: #STANDARD,
+      type: #LINEITEM_REFERENCE,
+      position: 50,
+      targetElement: '_cost'
+    }
+  ]
+
+  /* Header fields */
+
+  @UI.identification: [{ position: 10 }]
+  @UI.lineItem: [{ position: 10 }]
+  MafId;
+  @UI.identification: [{ position: 20 }]
+  Description;
+  @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  CurrencyCode;
+  @UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ qualifier: 'History', position: 10 }]
+  CreatedBy;
+  @UI.lineItem: [{ position: 50 }]
+  @UI.fieldGroup: [{ qualifier: 'History', position: 20 }]
+  CreatedAt;
+  @UI: { lineItem: [
+         { position: 60 },
+         { type: #FOR_ACTION,
+           dataAction: 'approveDoc',
+           label: 'Approve' },
+         { type: #FOR_ACTION,
+           dataAction: 'rejectDoc',
+           label: 'Reject' } ],
+       identification: [
+         { position: 40 },
+         { type: #FOR_ACTION,
+           dataAction: 'approveDoc',
+           label: 'Approve' },
+         { type: #FOR_ACTION,
+           dataAction: 'rejectDoc',
+           label: 'Reject' } ] }
+  Approved;
+
+  @UI.fieldGroup: [{ qualifier: 'History', position: 30 }]
+  LastChangedBy;
+  @UI.fieldGroup: [{ qualifier: 'History', position: 40 }]
+  LastChangedAt;
+  @UI.fieldGroup: [{ qualifier: 'History', position: 50 }]
+  LocalLastChangedAt;
+
+  /* Marketing fields */
+  @UI.fieldGroup: [{ qualifier: 'Marketing', position: 10 }]
+  MaterialDescription;
+  @UI.fieldGroup: [{ qualifier: 'Dimensions', position: 10 }]
+  Width;
+  @UI.fieldGroup: [{ qualifier: 'Dimensions', position: 20 }]
+  Height;
+  @UI.fieldGroup: [{ qualifier: 'Dimensions', position: 30 }]
+  Length;
+  @UI.fieldGroup: [{ qualifier: 'Dimensions', position: 40 }]
+  SizeUom;
+  @UI.fieldGroup: [{ qualifier: 'Dimensions', position: 50 }]
+  Volume;
+  @UI.fieldGroup: [{ qualifier: 'Dimensions', position: 60 }]
+  VolumeUom;
+}

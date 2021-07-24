@@ -1,0 +1,33 @@
+projection;
+
+define behavior for ZC_MAF_DOC alias Document
+{
+  use create;
+  use update;
+  use delete;
+  use association _COST { }
+  use association _FINANCE { }
+  use association _PRODUCTION { create; }
+  use action approveDoc;
+  use action rejectDoc;
+}
+
+define behavior for ZC_MAF_COST_CALC alias Cost
+{
+  use association _DOC;
+}
+
+define behavior for ZC_MAF_FINANCE alias Finance
+{
+  use update;
+  //use delete;
+  use association _DOC;
+}
+
+define behavior for ZC_MAF_PROD alias Production
+{
+  use create;
+  use update;
+  use delete;
+  use association _DOC;
+}

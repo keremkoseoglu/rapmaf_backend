@@ -1,0 +1,7 @@
+@EndUserText.label: 'MAF Doc API'
+define service ZAPI_MAF_DOC {
+  expose ZC_MAF_DOC;
+  expose ZC_MAF_PROD as Production;
+  expose ZC_MAF_FINANCE as Finance;
+  expose ZC_MAF_COST_CALC as CostCalculation;
+}

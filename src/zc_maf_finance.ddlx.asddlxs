@@ -1,0 +1,45 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+  typeName: 'Finance',
+  typeNamePlural: 'Finances',
+  title: {
+    type: #STANDARD,
+    label: 'Price',
+    value: 'MaterialDescription'
+  }
+}
+annotate entity ZC_MAF_FINANCE with
+{
+  @UI.facet: [
+    {
+      id: 'Finance',
+      purpose: #STANDARD,
+      position: 10,
+      label: 'Price',
+      type: #IDENTIFICATION_REFERENCE
+    },
+    {
+      label: 'Evaluation',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      position: 20,
+      targetQualifier: 'Evaluation'
+    }
+  ]
+
+  @UI.identification: [{ position: 10 }]
+  MafId;
+  @UI.identification: [{ position: 20 }]
+  Material;
+  @UI.identification: [{ position: 30 }]
+  MaterialDescription;
+  @UI.lineItem: [{ position: 10 }]
+  @UI.fieldGroup: [{ qualifier: 'Evaluation', position: 10 }]
+  Price;
+  @UI.lineItem: [{ position: 20 }]
+  @UI.fieldGroup: [{ qualifier: 'Evaluation', position: 20 }]
+  CurrencyCode;
+  @UI.lineItem: [{ position: 30 }]
+  @UI.fieldGroup: [{ qualifier: 'Evaluation', position: 30 }]
+  PriceUnit;
+}
